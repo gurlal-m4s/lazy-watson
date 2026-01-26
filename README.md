@@ -21,6 +21,26 @@ This plugin brings the functionality of these excellent tools to Neovim:
 
 Built specifically for projects using [Paraglide JS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs) - the i18n library that compiles messages into tree-shakable functions.
 
+## Related Projects
+
+### [lazyi18n](https://github.com/strehk/lazyi18n)
+
+A Terminal UI for i18n management that pairs perfectly with lazy-watson. While lazy-watson lets you *see* your translations inline, lazyi18n lets you *edit* them in a beautiful TUI.
+
+```lua
+-- Add a keybinding to edit the translation under cursor
+{
+  "<leader>we",
+  function()
+    local key = require("lazy-watson").get_key_at_cursor()
+    if key then
+      vim.cmd("terminal lazyi18n tui --edit " .. key)
+    end
+  end,
+  desc = "Edit translation key",
+}
+```
+
 ## Requirements
 
 - Neovim >= 0.9.0
