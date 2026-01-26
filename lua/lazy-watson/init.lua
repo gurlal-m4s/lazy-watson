@@ -171,45 +171,45 @@ function M.select_locale()
 
   local locales = state.settings.locales
 
-  vim.ui.select(locales, {
-    prompt = "Select locale:",
-    format_item = function(locale)
-      if not locale then
-        return ""
-      end
-      local marker = ""
-      if locale == state.current_locale then
-        marker = " (current)"
-      elseif locale == state.settings.baseLocale then
-        marker = " (base)"
-      end
-      return locale .. marker
-    end,
-  }, function(choice)
-    if not choice then
-      return
+  -- Build choices list for inputlist (1-indexed)
+  local choices = { "Select locale:" }
+  for i, locale in ipairs(locales) do
+    local marker = ""
+    if locale == state.current_locale then
+      marker = " (current)"
+    elseif locale == state.settings.baseLocale then
+      marker = " (base)"
     end
+    table.insert(choices, string.format("%d. %s%s", i, locale, marker))
+  end
 
-    state.current_locale = choice
+  -- Use inputlist which is more stable than vim.ui.select
+  local choice_idx = vim.fn.inputlist(choices)
 
-    -- Load messages for new locale if not cached
-    if not state.messages[choice] and state.project_root and state.settings then
-      state.messages[choice] = loader.load_messages(
-        state.project_root,
-        state.settings.pathPattern,
-        choice
-      )
+  if choice_idx < 1 or choice_idx > #locales then
+    return
+  end
+
+  local choice = locales[choice_idx]
+  state.current_locale = choice
+
+  -- Load messages for new locale if not cached
+  if not state.messages[choice] and state.project_root and state.settings then
+    state.messages[choice] = loader.load_messages(
+      state.project_root,
+      state.settings.pathPattern,
+      choice
+    )
+  end
+
+  -- Re-render all attached buffers
+  for bufnr, _ in pairs(state.attached_buffers) do
+    if vim.api.nvim_buf_is_valid(bufnr) then
+      M._update_buffer(bufnr)
     end
+  end
 
-    -- Re-render all attached buffers
-    for bufnr, _ in pairs(state.attached_buffers) do
-      if vim.api.nvim_buf_is_valid(bufnr) then
-        M._update_buffer(bufnr)
-      end
-    end
-
-    vim.notify("Locale set to: " .. choice, vim.log.levels.INFO)
-  end)
+  vim.notify("Locale set to: " .. choice, vim.log.levels.INFO)
 end
 
 --- Get translation key at cursor position
