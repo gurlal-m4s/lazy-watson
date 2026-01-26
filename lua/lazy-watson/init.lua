@@ -164,14 +164,19 @@ end
 
 --- Open locale picker
 function M.select_locale()
-  if not state.settings or not state.settings.locales then
+  if not state.settings or not state.settings.locales or #state.settings.locales == 0 then
     vim.notify("No inlang project found", vim.log.levels.WARN)
     return
   end
 
-  vim.ui.select(state.settings.locales, {
+  local locales = state.settings.locales
+
+  vim.ui.select(locales, {
     prompt = "Select locale:",
     format_item = function(locale)
+      if not locale then
+        return ""
+      end
       local marker = ""
       if locale == state.current_locale then
         marker = " (current)"
@@ -181,27 +186,29 @@ function M.select_locale()
       return locale .. marker
     end,
   }, function(choice)
-    if choice then
-      state.current_locale = choice
-
-      -- Load messages for new locale if not cached
-      if not state.messages[choice] and state.project_root and state.settings then
-        state.messages[choice] = loader.load_messages(
-          state.project_root,
-          state.settings.pathPattern,
-          choice
-        )
-      end
-
-      -- Re-render all attached buffers
-      for bufnr, _ in pairs(state.attached_buffers) do
-        if vim.api.nvim_buf_is_valid(bufnr) then
-          M._update_buffer(bufnr)
-        end
-      end
-
-      vim.notify("Locale set to: " .. choice, vim.log.levels.INFO)
+    if not choice then
+      return
     end
+
+    state.current_locale = choice
+
+    -- Load messages for new locale if not cached
+    if not state.messages[choice] and state.project_root and state.settings then
+      state.messages[choice] = loader.load_messages(
+        state.project_root,
+        state.settings.pathPattern,
+        choice
+      )
+    end
+
+    -- Re-render all attached buffers
+    for bufnr, _ in pairs(state.attached_buffers) do
+      if vim.api.nvim_buf_is_valid(bufnr) then
+        M._update_buffer(bufnr)
+      end
+    end
+
+    vim.notify("Locale set to: " .. choice, vim.log.levels.INFO)
   end)
 end
 
