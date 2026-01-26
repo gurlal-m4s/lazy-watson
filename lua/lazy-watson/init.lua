@@ -89,6 +89,12 @@ function M.setup(opts)
 
   -- CursorHold for hover preview
   if M.config.hover.enabled then
+    -- Set updatetime for responsive hover (only if lower than current)
+    local hover_delay = M.config.hover.delay or 300
+    if hover_delay < vim.o.updatetime then
+      vim.o.updatetime = hover_delay
+    end
+
     vim.api.nvim_create_autocmd("CursorHold", {
       group = augroup,
       callback = function(args)
