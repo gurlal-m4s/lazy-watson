@@ -164,12 +164,28 @@ end
 
 --- Open locale picker
 function M.select_locale()
-  if not state.settings or not state.settings.locales or #state.settings.locales == 0 then
+  -- Very defensive nil checks
+  if state == nil then
+    vim.notify("Watson not initialized", vim.log.levels.WARN)
+    return
+  end
+
+  if state.settings == nil then
     vim.notify("No inlang project found", vim.log.levels.WARN)
     return
   end
 
+  if state.settings.locales == nil then
+    vim.notify("No locales configured", vim.log.levels.WARN)
+    return
+  end
+
   local locales = state.settings.locales
+
+  if type(locales) ~= "table" or #locales == 0 then
+    vim.notify("No locales available", vim.log.levels.WARN)
+    return
+  end
 
   vim.ui.select(locales, {
     prompt = "Select locale:",
